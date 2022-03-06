@@ -5,6 +5,11 @@ import getPlanetsAndInfo from '../services/starWarsAPI';
 
 function JediProvider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [planetsFilter, setFilterPlanet] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: { name: '' },
+  });
+  const [nameFilter, setNameFilter] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => { // Calling Star Wars API
@@ -22,11 +27,27 @@ function JediProvider({ children }) {
     fetchPlanets();
   }, []);
 
+  useEffect(() => {
+    setFilterPlanet(planets);
+  }, [planets]);
+
+  const handleFilter = ({ target }) => {
+    setNameFilter(target.value);
+    setFilters({ filterByName: { name: target.value } });
+    const filtering = planets.filter(
+      (planet) => planet.name.includes(target.value),
+    );
+    setFilterPlanet(filtering);
+  };
+
   return (
     <JediContext.Provider
       value={ {
-        planets,
+        planets: planetsFilter,
         loading,
+        nameFilter,
+        handleFilter,
+        filters,
       } }
     >
       {children}

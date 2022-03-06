@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import Table from 'react-bootstrap/Table';
 import JediContext from '../context/JediContext';
 import './styles/Home.css';
 
@@ -7,7 +8,7 @@ function Home() {
 
   return (
     <section className="star-wars">
-      <table className="planets-table table table-striped table-dark">
+      <Table striped borderless responsive className="planets-table" variant="dark">
         <thead>
           <tr role="row">
             <th role="columnheader">Name</th>
@@ -49,7 +50,7 @@ function Home() {
             );
           })}
         </tbody>
-      </table>
+      </Table>
     </section>
   );
 }

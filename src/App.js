@@ -1,9 +1,12 @@
 import React from 'react';
-import './App.css';
+import JediProvider from './context/JediProvider';
+import Home from './pages/Home';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <JediProvider>
+      <Home />
+    </JediProvider>
   );
 }
 

@@ -4,12 +4,18 @@ import JediContext from './JediContext';
 import getPlanetsAndInfo from '../services/starWarsAPI';
 
 function JediProvider({ children }) {
-  const [planets, setPlanets] = useState([]);
-  const [planetsFilter, setFilterPlanet] = useState([]);
-  const [filters, setFilters] = useState({
-    filterByName: { name: '' },
+  const [planets, setPlanets] = useState([]); // Array received from API fetch
+  const [planetsFilter, setFilterPlanet] = useState([]); // New array after being filtered
+  const [inputs, setInputs] = useState({ // Values of inputs and selects of control panel
+    name: '',
+    category: 'population',
+    comparison: 'maior que',
+    value: 0,
   });
-  const [nameFilter, setNameFilter] = useState('');
+  const [filters, setFilters] = useState({ // Rules to filter the array
+    filterByName: { name: '' },
+    filterByNumericValue: [],
+  });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => { // Calling Star Wars API
@@ -27,17 +33,36 @@ function JediProvider({ children }) {
     fetchPlanets();
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { // Assign to the planetsFilter the same value of planets
     setFilterPlanet(planets);
   }, [planets]);
 
-  const handleFilter = ({ target }) => {
-    setNameFilter(target.value);
-    setFilters({ filterByName: { name: target.value } });
-    const filtering = planets.filter(
-      (planet) => planet.name.includes(target.value),
+  const filterByPlanetName = (value) => {
+    setFilters({ filterByName: { name: value } });
+    const filter = planets.filter(
+      (planet) => planet.name.includes(value),
     );
-    setFilterPlanet(filtering);
+    setFilterPlanet(filter);
+  };
+
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
+    setInputs({ ...inputs, [name]: value });
+
+    if (target.name === 'name') {
+      filterByPlanetName(value);
+    }
+  };
+
+  const handleClickToFilter = () => {
+    setFilters({
+      ...filters,
+      filterByNumericValue: [...filters.filterByNumericValue, {
+        column: inputs.category,
+        comparison: inputs.comparison,
+        value: inputs.value,
+      }],
+    });
   };
 
   return (
@@ -45,8 +70,9 @@ function JediProvider({ children }) {
       value={ {
         planets: planetsFilter,
         loading,
-        nameFilter,
-        handleFilter,
+        handleChange,
+        handleClickToFilter,
+        inputs,
         filters,
       } }
     >

@@ -1,0 +1,84 @@
+.control-panel {
+  background-color: orange;
+  display: flex;
+  flex-direction: column;
+}
+
+.control-panel form {
+  width: 100%;
+}
+
+.planet-search-control {
+  background-color: #212529;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  width: 100%;
+}
+
+.other-filters {
+  align-items: center;
+  background-color: #2c3034;
+  display: flex;
+  flex-direction: row;
+}
+
+.other-text {
+  background-color: #2c3034;
+  color: white;
+  font-weight: 700;
+  padding: 15px;
+}
+
+.other {
+  display: flex;
+  flex-direction: column;
+  margin-right: 15px;
+}
+
+.other select {
+  background-color: #6e6e6e;
+  border: none;
+  color: white;
+  height: 33px;
+  padding: 5px;
+  width: 300px;
+}
+
+.planet-filter span {
+  font-weight: 700;
+}
+
+.planet-filter input {
+  background-color: #6e6e6e;
+  border: none;
+  color: white;
+  height: 33px;
+  padding: 5px;
+  width: 300px;
+}
+
+.planet-filter input:focus {
+  outline: none;
+}
+
+.planet-filter input::placeholder {
+  color: white;
+  opacity: 50%;
+}
+
+.planet-filter span:last-of-type {
+  color: #919090;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.button-filter {
+  background-color: #1f1f1f;
+  border: 2px solid white;
+  color: white;
+  font-weight: 700;
+  height: 40px;
+  padding: 0 30px;
+}

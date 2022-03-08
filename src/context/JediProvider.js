@@ -63,6 +63,30 @@ function JediProvider({ children }) {
         value: inputs.value,
       }],
     });
+
+    planets.forEach((planet) => {
+      planet.population = parseInt(planet.population, 10);
+      planet.rotation_period = parseInt(planet.rotation_period, 10);
+      planet.orbital_period = parseInt(planet.orbital_period, 10);
+      planet.diameter = parseInt(planet.diameter, 10);
+      planet.surface_water = parseInt(planet.surface_water, 10);
+    });
+
+    if (inputs.comparison === 'maior que') {
+      const filterByOthers = planets.filter((planet) => planet[inputs.category]
+    > inputs.value);
+      setFilterPlanet(filterByOthers);
+    } else if (inputs.comparison === 'menor que') {
+      const filterByOthers = planets.filter((planet) => planet[inputs.category]
+    < inputs.value);
+      setFilterPlanet(filterByOthers);
+    } else if (inputs.comparison === 'igual a') {
+      const filterByOthers = planets.filter((planet) => planet[inputs.category]
+    === parseInt(inputs.value, 10));
+      setFilterPlanet(filterByOthers);
+    } else {
+      setLoading(true);
+    }
   };
 
   return (

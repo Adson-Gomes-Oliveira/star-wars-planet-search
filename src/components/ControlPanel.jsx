@@ -3,7 +3,8 @@ import JediContext from '../context/JediContext';
 import './styles/ControlPanel.css';
 
 function ControlPanel() {
-  const { handleClickToFilter, inputs, handleChange } = useContext(JediContext);
+  const { handleClickToFilter,
+    inputs, handleChange, filtersInputs } = useContext(JediContext);
   const { name, category, comparison, value } = inputs;
   return (
     <section className="control-panel">
@@ -45,11 +46,21 @@ function ControlPanel() {
             onChange={ handleChange }
             value={ category }
           >
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            {filtersInputs.population ? (
+              <option value="population">population</option>
+            ) : null}
+            {filtersInputs.orbital_period ? (
+              <option value="orbital_period">orbital_period</option>
+            ) : null}
+            {filtersInputs.diameter ? (
+              <option value="diameter">diameter</option>
+            ) : null}
+            {filtersInputs.rotation_period ? (
+              <option value="rotation_period">rotation_period</option>
+            ) : null}
+            {filtersInputs.surface_water ? (
+              <option value="surface_water">surface_water</option>
+            ) : null}
           </select>
           <span>Filter infos by Category</span>
         </label>

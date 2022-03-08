@@ -16,6 +16,13 @@ function JediProvider({ children }) {
     filterByName: { name: '' },
     filterByNumericValue: [],
   });
+  const [filtersInputs, setFiltersInput] = useState({
+    rotation_period: 'rotation_period',
+    orbital_period: 'orbital_period',
+    diameter: 'diameter',
+    surface_water: 'surface_water',
+    population: 'population',
+  });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => { // Calling Star Wars API
@@ -49,17 +56,17 @@ function JediProvider({ children }) {
         const { column, comparison, value } = filter;
         switch (comparison) {
         case 'maior que':
-          setFilterPlanet(planetsFilter.filter((planet) => planet[column]
+          setFilterPlanet((previous) => previous.filter((planet) => planet[column]
           > value));
           break;
 
         case 'menor que':
-          setFilterPlanet(planetsFilter.filter((planet) => planet[column]
+          setFilterPlanet((previous) => previous.filter((planet) => planet[column]
           < value));
           break;
 
         case 'igual a':
-          setFilterPlanet(planetsFilter.filter((planet) => planet[column]
+          setFilterPlanet((previous) => previous.filter((planet) => planet[column]
           === parseInt(value, 10)));
           break;
 
@@ -92,6 +99,10 @@ function JediProvider({ children }) {
       }],
     });
 
+    const newInputs = filtersInputs;
+    delete newInputs[inputs.category];
+    setFiltersInput(newInputs);
+
     planets.forEach((planet) => {
       planet.population = parseInt(planet.population, 10);
       planet.rotation_period = parseInt(planet.rotation_period, 10);
@@ -110,6 +121,7 @@ function JediProvider({ children }) {
         handleClickToFilter,
         inputs,
         filters,
+        filtersInputs,
       } }
     >
       {children}

@@ -37,20 +37,48 @@ function JediProvider({ children }) {
     setFilterPlanet(planets);
   }, [planets]);
 
-  const filterByPlanetName = (value) => {
-    setFilters({ filterByName: { name: value } });
-    const filter = planets.filter(
-      (planet) => planet.name.includes(value),
-    );
+  useEffect(() => {
+    const { name } = filters.filterByName;
+    const filter = planets.filter((planet) => planet.name.includes(name));
     setFilterPlanet(filter);
-  };
+  }, [filters.filterByName, planets]);
+
+  useEffect(() => {
+    if (filters.filterByNumericValue.length > 0) {
+      filters.filterByNumericValue.forEach((filter) => {
+        const { column, comparison, value } = filter;
+        switch (comparison) {
+        case 'maior que':
+          setFilterPlanet(planetsFilter.filter((planet) => planet[column]
+          > value));
+          break;
+
+        case 'menor que':
+          setFilterPlanet(planetsFilter.filter((planet) => planet[column]
+          < value));
+          break;
+
+        case 'igual a':
+          setFilterPlanet(planetsFilter.filter((planet) => planet[column]
+          === parseInt(value, 10)));
+          break;
+
+        default:
+          break;
+        }
+      });
+    }
+  }, [filters.filterByNumericValue, planets]);
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setInputs({ ...inputs, [name]: value });
 
     if (target.name === 'name') {
-      filterByPlanetName(value);
+      setFilters({
+        ...filters,
+        filterByName: { name: value },
+      });
     }
   };
 
@@ -71,22 +99,6 @@ function JediProvider({ children }) {
       planet.diameter = parseInt(planet.diameter, 10);
       planet.surface_water = parseInt(planet.surface_water, 10);
     });
-
-    if (inputs.comparison === 'maior que') {
-      const filterByOthers = planets.filter((planet) => planet[inputs.category]
-    > inputs.value);
-      setFilterPlanet(filterByOthers);
-    } else if (inputs.comparison === 'menor que') {
-      const filterByOthers = planets.filter((planet) => planet[inputs.category]
-    < inputs.value);
-      setFilterPlanet(filterByOthers);
-    } else if (inputs.comparison === 'igual a') {
-      const filterByOthers = planets.filter((planet) => planet[inputs.category]
-    === parseInt(inputs.value, 10));
-      setFilterPlanet(filterByOthers);
-    } else {
-      setLoading(true);
-    }
   };
 
   return (

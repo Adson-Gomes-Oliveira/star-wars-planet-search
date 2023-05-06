@@ -1,11 +1,11 @@
 <div align="center"><h1>Star Wars Planet Search</h1></div>
 <br />
-<div align="center"><img src="" alt="thumbnail" /></div>
+<div align="center"><img src="https://i.ibb.co/8K9zmTH/image.png" alt="thumbnail" /></div>
 <br />
 <br />
 <div align="center">
 Buscador de planetas de Sar Wars, sendo possível a pesquisa por nome, população,
-entre outros diversos filtros e informações sobre os planetas
+entre outros diversos filtros e informações sobre os planetas.
 </div>
 <br />
 <br />
